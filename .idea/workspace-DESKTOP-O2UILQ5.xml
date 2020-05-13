@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="018314c2-9283-4df2-b6ec-702022aeafdf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/assets/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/bootstrap/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-brands-400.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-brands-400.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-brands-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-brands-400.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-brands-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-regular-400.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-regular-400.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-regular-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-regular-400.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-regular-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-solid-900.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-solid-900.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-solid-900.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-solid-900.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fa-solid-900.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/fonts/fontawesome-all.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/img/avatars/avatar1.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/img/avatars/avatar2.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/img/avatars/avatar3.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/img/avatars/avatar4.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/img/avatars/avatar5.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/img/dogs/image2.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/img/dogs/image3.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/js/bs-init.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/js/chart.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/js/jquery.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/assets/js/theme.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/documentation.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/profile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/temp table.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Flask Main" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="C:\Users\Leo\OneDrive - Trinity Anglican School\IT\IA2\weather monitor\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1bo7iLbc7LzM2fEBVDtC46oCbde" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunManager">
+    <configuration name="weather monitor" type="Python.FlaskServer">
+      <module name="weather monitor" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="018314c2-9283-4df2-b6ec-702022aeafdf" name="Default Changelist" comment="" />
+      <created>1589286718340</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589286718340</updated>
+      <workItem from="1589286720110" duration="1411000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1700" y="801" key="FileChooserDialogImpl" timestamp="1589287390669">
+      <screen x="0" y="0" width="3840" height="2120" />
+    </state>
+    <state x="1700" y="801" key="FileChooserDialogImpl/0.0.3840.2120@0.0.3840.2120" timestamp="1589287390669" />
+    <state x="1780" y="953" key="Github.ShareDialog" timestamp="1589287609038">
+      <screen x="0" y="0" width="3840" height="2120" />
+    </state>
+    <state x="1780" y="953" key="Github.ShareDialog/0.0.3840.2120@0.0.3840.2120" timestamp="1589287609038" />
+    <state x="1646" y="765" key="Github.UntrackedFilesDialog" timestamp="1589287627161">
+      <screen x="0" y="0" width="3840" height="2120" />
+    </state>
+    <state x="1646" y="765" key="Github.UntrackedFilesDialog/0.0.3840.2120@0.0.3840.2120" timestamp="1589287627161" />
+    <state x="1512" y="793" key="Vcs.Push.Dialog.v2" timestamp="1589287485501">
+      <screen x="0" y="0" width="3840" height="2120" />
+    </state>
+    <state x="1512" y="793" key="Vcs.Push.Dialog.v2/0.0.3840.2120@0.0.3840.2120" timestamp="1589287485501" />
+    <state x="1616" y="884" key="com.intellij.ide.util.TipDialog" timestamp="1589286733286">
+      <screen x="0" y="0" width="3840" height="2120" />
+    </state>
+    <state x="1616" y="884" key="com.intellij.ide.util.TipDialog/0.0.3840.2120@0.0.3840.2120" timestamp="1589286733286" />
+  </component>
+</project>
