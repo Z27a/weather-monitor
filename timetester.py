@@ -20,4 +20,4 @@ print('future_date_after_2days:', str(future_date_after_2days))
 
 print(datetime.timestamp(ini_time_for_now), datetime.timestamp(future_date_after_5min))
 
-print(datetime.fromtimestamp(1589602450.825839),datetime.fromtimestamp(1589602750.825839))
+print(datetime.fromtimestamp(int(1589602450.825839)),datetime.fromtimestamp(1589602750.825839))
