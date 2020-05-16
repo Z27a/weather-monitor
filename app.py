@@ -1,12 +1,18 @@
-from flask import Flask
+#importing libraries
+from flask import *
+import hashlib
+import sqlite3
+import datetime
+import ast
+import uuid
 
+#setting variables
 app = Flask(__name__)
 
-
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
+#home page
+@app.route("/", methods=('GET', 'POST'))
+def index():
+    return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

@@ -3,12 +3,11 @@ from datetime import datetime
 import time
 import sqlite3
 
-weatherDb = "static/weather.db"
-userDb = "static/users.db"
+weatherDb = "static/weather_user.db"
 
 timestamp = float(datetime.timestamp(datetime.now()))
 
-for i in range(10):
+for i in range(17220):
 
     try:
         conn = sqlite3.connect(weatherDb)
@@ -84,5 +83,4 @@ for i in range(10):
 
     conn.close()
 
-    timestamp += timestamp + 1.03362
-
+    timestamp = timestamp + 1.03362
