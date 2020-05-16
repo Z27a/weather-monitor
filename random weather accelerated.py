@@ -1,13 +1,13 @@
 import random
-from datetime import datetime
+from datetime import *
 import time
 import sqlite3
 
 weatherDb = "static/weather_user.db"
 
-timestamp = float(datetime.timestamp(datetime.now()))
+timestamp = datetime.timestamp(datetime.now())
 
-for i in range(17220):
+for i in range(4032):
 
     try:
         conn = sqlite3.connect(weatherDb)
@@ -83,4 +83,4 @@ for i in range(17220):
 
     conn.close()
 
-    timestamp = timestamp + 1.03362
+    timestamp = timestamp + 300
