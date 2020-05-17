@@ -232,17 +232,33 @@
     <script src="{{url_for('static', filename='assets/js/bs-init.js')}}"></script>
     <script src="{{url_for('static', filename='assets/js/theme.js')}}"></script>
 
+    <!-- onload get data -->
     <script>
         // this is the main jquery function
         $(document).ready(function(){
-            // GET THE TRACKING ID - you would get this as per normal in your javascript.
+            // getting amount of rows/repeats
             var repeats = document.getElementById("repeats").value;
-            // generate the url - this needs to be the route in your python code
+            // generate the url
             var url="/api/temperature/" + repeats;
-            // the ajax call,
+            // the ajax call
             $.get(url,function(data){
                 // the data is what is returned
               $("#dataRows").html(data);
+            });
+         });
+    </script>
+
+    <!-- on change in row amount -->
+    <script>
+        // this is the main jquery function
+        $(document).ready(function(){
+            // bind the click event to the row length drop down
+            $("#repeats").click(function() {
+                var repeats = document.getElementById("repeats").value;
+                var url = "/api/temperature/" + repeats;
+                $.get(url, function (data) {
+                    $("#dataRows").html(data);
+                });
             });
          });
     </script>

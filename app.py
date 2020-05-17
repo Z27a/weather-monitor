@@ -82,8 +82,7 @@ def temp():
     return render_template('tempTable.html')
 
 
-
-
+#API----------------------------------------------------------------------------------------------------------------------
 def APIselectTemp(conn, timestamp, repeats, period):
     cur = conn.cursor()
     results = []
@@ -102,6 +101,29 @@ def APIselectTemp(conn, timestamp, repeats, period):
         timestamp = timestamp - period
     return(results)
 
+# def APIselectTemp(conn, repeats, orderItem, order):
+#     cur = conn.cursor()
+#     sql = f"select Temp1, Temp2, Temp3, Timestamps from Link join Temperature on Temperature.TempID = Link.TempID join Dates on Dates.TimeID=Link.TimeID order by {orderItem} {order} limit {repeats}"
+#     fetch = cur.execute(sql).fetchall()
+#     print(fetch)
+#
+#     for item in fetch:
+#         asfd
+#
+#     results = []
+#     for i in range(repeats):
+#         sql = f"select Temp1, Temp2, Temp3 from Link join Temperature on Temperature.TempID = Link.TempID join Dates on Dates.TimeID=Link.TimeID where Dates.timestamps = {timestamp}"
+#         #fetched sql data
+#         fetch = cur.execute(sql).fetchall()
+#         #average temps and put into tuple
+#         avg = round(((fetch[0][0]+fetch[0][1]+fetch[0][2])/3),2)
+#         # add time to average temp tuple
+#         tt = (avg, str(datetime.fromtimestamp(int(timestamp))))
+#         #add temperature and time tuple to list
+#         final = [(fetch[0] + tt), ]
+#         #add more temperature elements to list
+#         results = results + final
+#     return(results)
 
 @app.route("/api/temperature/<repeats>", methods=('GET', 'POST'))
 def APIgetTemps(repeats=0):
@@ -121,9 +143,23 @@ def APIgetTemps(repeats=0):
                     '''
         return html
 
-
-
-
+# @app.route("/api/temperature/<repeats>/<orderItem>/<order>", methods=('GET', 'POST'))
+# def APIgetTemps(repeats=0, orderItem=0, order=0):
+#     if repeats != 0:
+#         conn = create_connection(db)
+#         info = APIselectTemp(conn, int(repeats), orderItem, order)
+#         html = ''
+#         for item in info:
+#             html += f'''
+#                    <tr>
+#                         <td>{item[0]}°C<br></td>
+#                         <td>{item[1]}°C<br></td>
+#                         <td>{item[2]}°C<br></td>
+#                         <td>{item[3]}°C<br></td>
+#                         <td>{item[4]}</td>
+#                     </tr>
+#                     '''
+#         return html
 
 if __name__ == '__main__':
     app.run(debug=True)
