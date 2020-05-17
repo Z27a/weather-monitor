@@ -65,6 +65,19 @@ def selectWave(conn, timestamp, repeats, period):
     return(results)
 
 
+def selectPword(conn, email):
+    cur = conn.cursor()
+    sql = f"select Password from Users where Email = '{email}'"
+    results = cur.execute(sql).fetchall()[0]
+    return(results)
+
+
+def selectNames(conn, email):
+    cur = conn.cursor()
+    sql = f"select First_name, Last_name from Users where Email = '{email}'"
+    results = cur.execute(sql).fetchall()[0]
+    return(results)
+
 #home page
 @app.route("/", methods=('GET', 'POST'))
 def index():
@@ -77,9 +90,44 @@ def index():
 
     return render_template('index.html', Temp1=Temp1, Temp2=Temp2, Temp3=Temp3, WindSpeed=WindSpeed, Wave=Wave)
 
+
 @app.route("/temperature", methods=('GET', 'POST'))
 def temp():
     return render_template('tempTable.html')
+
+
+@app.route("/login", methods=('GET', 'POST'))
+def login():
+    # check method
+    if request.method == 'POST':
+        conn = create_connection(db)
+        # requesting info from form
+        # Doesn't if username is a large number. Use input filtering in next iteration.
+        if request.form['email'] and request.form['password']:
+            email = request.form['email']
+            pword = request.form['password']
+            #encode input
+            email = (hashlib.sha256(email.encode('utf-8'))).hexdigest()
+            pword = (hashlib.sha256(pword.encode('utf-8'))).hexdigest()
+            try:
+                #get password from server
+                serverPword = selectPword(conn, email)[0]
+                #if passwords match
+                if pword == str(serverPword):
+                    response = make_response(redirect(url_for("index")))
+                    # set make cookies with names
+                    names = selectNames(conn, email)
+                    print('henlo?')
+                    response.set_cookie(f"{names[0]}", f"{names[1]}")
+                    print('what is this?')
+                    return response
+            except: # if not correct
+                # set error message
+                #doesn't show if username is correct but password isn't. Redo loops in next iteration.
+                errorMsg = "Username or Password is incorrect."
+                # reload page with error message
+                return render_template('login.html', errorMsg=errorMsg)
+    return render_template('login.html')
 
 
 #API----------------------------------------------------------------------------------------------------------------------
