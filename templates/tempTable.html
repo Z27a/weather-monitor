@@ -150,7 +150,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 text-nowrap">
-                                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select class="form-control form-control-sm custom-select custom-select-sm"><option value="10" selected="">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>&nbsp;</label></div>
+                                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select id="repeats" class="form-control form-control-sm custom-select custom-select-sm"><option value="10" selected="">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>&nbsp;</label></div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
@@ -167,14 +167,8 @@
                                                 <th>Time</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>x°C<br></td>
-                                                <td>Y°C<br></td>
-                                                <td>z°C<br></td>
-                                                <td>v°C<br></td>
-                                                <td>15:15 2008/11/28</td>
-                                            </tr>
+                                        <tbody id="dataRows">
+
                                         </tbody>
                                         <tfoot>
                                             <tr></tr>
@@ -240,25 +234,17 @@
 
     <script>
         // this is the main jquery function
-            $(document).ready(function(){
-
-              // bind the click event to the fetchTrackingBtn
-              $("#fetchTrackingButton").click(function(){
-
-                // GET THE TRACKING ID - you would get this as per normal in your javascript.
-                var trackingId = document.getElementById("trackingID").value;
-                // generate the url - this needs to be the route in your python code
-                var url="/api/getData/" + trackingId;
-
-                // the ajax call,
-                $.get(url,function(data){
-                    // the data is what is returned
-                  $("#trackingInfo").html(data);
-                    // can do other stuff here too
-                 //alert("Load was performed.");
-                });
-             });
+        $(document).ready(function(){
+            // GET THE TRACKING ID - you would get this as per normal in your javascript.
+            var repeats = document.getElementById("repeats").value;
+            // generate the url - this needs to be the route in your python code
+            var url="/api/temperature/" + repeats;
+            // the ajax call,
+            $.get(url,function(data){
+                // the data is what is returned
+              $("#dataRows").html(data);
             });
+         });
     </script>
 
 </body>
