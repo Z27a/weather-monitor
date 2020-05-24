@@ -200,9 +200,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-auto">
-                                        <p class="d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>Start Date:</strong></p><input type="date"></div>
+                                        <p class="d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>Start Date:</strong></p><input type="date" id="startDate"></div>
                                     <div class="col-auto">
-                                        <p class="d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>End Date:</strong></p><input type="date"></div>
+                                        <p class="d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>End Date:</strong></p><input type="date" id="endDate"></div>
                                     <div class="col-auto">
                                         <div class="dropdown d-inline-flex"><button class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button" style="color: rgb(78,115,223);"><strong>Frequency</strong></button>
                                             <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
@@ -210,7 +210,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col"><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Download Data</a></div>
+                                    <div class="col">
+                                        <form method="post" id="downloadForm" action="/api/download/dummy/dummy"><a class="btn btn-primary btn-sm d-none d-sm-inline-block" id="download" onclick="submit()"><i class="fas fa-download fa-sm text-white-50"></i><span style="color: #ffffff">Download Data</span></a></form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -262,6 +264,41 @@
          });
     </script>
 
+    <!-- download csv -->
+{#    <script>#}
+{#        // this is the main jquery function#}
+{#        $(document).ready(function(){#}
+{#            // bind the click event to the row length drop down#}
+{#            $("#download").click(function() {#}
+{#                var startDate = document.getElementById("startDate").value;#}
+{#                var endDate = document.getElementById("endDate").value;#}
+{#                var url = "/api/download/" + startDate + "/" + endDate;#}
+{#                $.get(url, function (data) {#}
+{#                    fetch(data)#}
+{#                      .then(resp => resp.blob())#}
+{#                      .then(blob => {#}
+{#                        const url = window.URL.createObjectURL(blob);#}
+{#                        const a = document.createElement('a');#}
+{#                        a.style.display = 'none';#}
+{#                        a.href = url;#}
+{#                        // the filename you want#}
+{#                        a.download = 'weather_data.csv';#}
+{#                        document.body.appendChild(a);#}
+{#                        a.click();#}
+{#                        window.URL.revokeObjectURL(url);#}
+{#                        alert('your file has downloaded!'); // or you know, something with better UX...#}
+{#                      })#}
+{#                      .catch(() => alert('oh no!'));#}
+{#                });#}
+{#            });#}
+{#         });#}
+{#    </script>#}
+
+    <script>
+        function submit() {
+            document.getElementById("downloadForm").submit();
+        }
+    </script>
 </body>
 
 </html>
