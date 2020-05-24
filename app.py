@@ -39,7 +39,7 @@ def selectTemp(conn, depth, timestamp, repeats, period):
     cur = conn.cursor()
     results = ()
     for i in range(repeats):
-        sql = f"select {depth} from Link join Temperature on Temperature.TempID = Link.TempID join Dates on Dates.TimeID=Link.TimeID where Dates.timestamps = {timestamp}"
+        sql = f"select {depth} from WeatherData join Dates on Dates.TimeID = WeatherData.TimeID where Dates.Timestamps = {timestamp}"
         results = results + cur.execute(sql).fetchall()[0]
         timestamp = timestamp - period
     return(results)
@@ -49,7 +49,7 @@ def selectWindSpeed(conn, timestamp, repeats, period):
     cur = conn.cursor()
     results = ()
     for i in range(repeats):
-        sql = f"select Windspeed from Link join Wind on Wind.WindID = Link.WindID join Dates on Dates.TimeID=Link.TimeID where Dates.timestamps = {timestamp}"
+        sql = f"select WindSpeed from WeatherData join Dates on Dates.TimeID = WeatherData.TimeID where Dates.Timestamps = {timestamp}"
         results = results + cur.execute(sql).fetchall()[0]
         timestamp = timestamp - period
     return(results)
@@ -60,7 +60,7 @@ def selectWave(conn, timestamp, repeats, period):
     cur = conn.cursor()
     results = ()
     for i in range(repeats):
-        sql = f"select WaveHeight from Link join Wave on Wave.WaveID = Link.WaveID join Dates on Dates.TimeID=Link.TimeID where Dates.timestamps = {timestamp}"
+        sql = f"select WaveHeight from WeatherData join Dates on Dates.TimeID = WeatherData.TimeID where Dates.Timestamps = {timestamp}"
         results = results + cur.execute(sql).fetchall()[0]
         timestamp = timestamp - period
     return(results)
@@ -217,7 +217,7 @@ def APIselectTemp(conn, timestamp, repeats, period):
     cur = conn.cursor()
     results = []
     for i in range(repeats):
-        sql = f"select Temp1, Temp2, Temp3 from Link join Temperature on Temperature.TempID = Link.TempID join Dates on Dates.TimeID=Link.TimeID where Dates.timestamps = {timestamp}"
+        sql = f"select Temp1, Temp2, Temp3 from WeatherData join Dates on Dates.TimeID = WeatherData.TimeID where Dates.Timestamps = {timestamp}"
         #fetched sql data
         fetch = cur.execute(sql).fetchall()
         #average temps and put into tuple
@@ -231,35 +231,17 @@ def APIselectTemp(conn, timestamp, repeats, period):
         timestamp = timestamp - period
     return(results)
 
-# def APIselectTemp(conn, repeats, orderItem, order):
-#     cur = conn.cursor()
-#     sql = f"select Temp1, Temp2, Temp3, Timestamps from Link join Temperature on Temperature.TempID = Link.TempID join Dates on Dates.TimeID=Link.TimeID order by {orderItem} {order} limit {repeats}"
-#     fetch = cur.execute(sql).fetchall()
-#     print(fetch)
-#
-#     for item in fetch:
-#         asfd
-#
-#     results = []
-#     for i in range(repeats):
-#         sql = f"select Temp1, Temp2, Temp3 from Link join Temperature on Temperature.TempID = Link.TempID join Dates on Dates.TimeID=Link.TimeID where Dates.timestamps = {timestamp}"
-#         #fetched sql data
-#         fetch = cur.execute(sql).fetchall()
-#         #average temps and put into tuple
-#         avg = round(((fetch[0][0]+fetch[0][1]+fetch[0][2])/3),2)
-#         # add time to average temp tuple
-#         tt = (avg, str(datetime.fromtimestamp(int(timestamp))))
-#         #add temperature and time tuple to list
-#         final = [(fetch[0] + tt), ]
-#         #add more temperature elements to list
-#         results = results + final
-#     return(results)
+def APIselectOrderTemp(conn, repeats, orderItem, order):
+    cur = conn.cursor()
+    sql = f"select Temp1, Temp2, Temp3, Datetime from WeatherData join Dates on Dates.TimeID = WeatherData.TimeID order by {orderItem} {order} limit {repeats}"
+    results = cur.execute(sql).fetchall()
+    return(results)
 
 @app.route("/api/temperature/<repeats>", methods=('GET', 'POST'))
 def APIgetTemps(repeats=0):
     if repeats != 0:
         conn = create_connection(db)
-        info = APIselectTemp(conn, 1590815510.873754, int(repeats), 300)
+        info = APIselectTemp(conn, selectNewestTime(conn), int(repeats), 300)
         html = ''
         for item in info:
             html += f'''
@@ -267,7 +249,6 @@ def APIgetTemps(repeats=0):
                         <td>{item[0]}°C<br></td>
                         <td>{item[1]}°C<br></td>
                         <td>{item[2]}°C<br></td>
-                        <td>{item[3]}°C<br></td>
                         <td>{item[4]}</td>
                     </tr>
                     '''
@@ -276,7 +257,7 @@ def APIgetTemps(repeats=0):
 
 
 @app.route("/api/download/<startDate>/<endDate>", methods=('GET', 'POST'))
-def downloadFile(startDate='', endDate=''):
+def APIdownloadFile(startDate='', endDate=''):
     if startDate !='' and endDate != '':
         with open('output.csv', 'w', newline='') as csvfile:
             fieldnames = ['Time', 'Temperature (0m)', 'Temperature (-2m)', 'Temperature (-5m)', 'Average']
@@ -291,24 +272,23 @@ def downloadFile(startDate='', endDate=''):
                 writer.writerow({'Time':item[4], 'Temperature (0m)':item[0], 'Temperature (-2m)':item[1], 'Temperature (-5m)':item[2], 'Average':item[3]})
         return  send_file('output.csv', attachment_filename='data.csv')
 
-
-# @app.route("/api/temperature/<repeats>/<orderItem>/<order>", methods=('GET', 'POST'))
-# def APIgetTemps(repeats=0, orderItem=0, order=0):
-#     if repeats != 0:
-#         conn = create_connection(db)
-#         info = APIselectTemp(conn, int(repeats), orderItem, order)
-#         html = ''
-#         for item in info:
-#             html += f'''
-#                    <tr>
-#                         <td>{item[0]}°C<br></td>
-#                         <td>{item[1]}°C<br></td>
-#                         <td>{item[2]}°C<br></td>
-#                         <td>{item[3]}°C<br></td>
-#                         <td>{item[4]}</td>
-#                     </tr>
-#                     '''
-#         return html
+#
+@app.route("/api/temperature/<repeats>/<orderItem>/<order>", methods=('GET', 'POST'))
+def APIsortTemps(repeats=0, orderItem=0, order=0):
+    if repeats != 0:
+        conn = create_connection(db)
+        info = APIselectOrderTemp(conn, int(repeats), orderItem, order)
+        html = ''
+        for item in info:
+            html += f'''
+                   <tr>
+                        <td>{item[0]}°C<br></td>
+                        <td>{item[1]}°C<br></td>
+                        <td>{item[2]}°C<br></td>
+                        <td>{item[3]}</td>
+                    </tr>
+                    '''
+        return html
 
 if __name__ == '__main__':
     app.run(debug=True)

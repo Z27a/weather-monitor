@@ -156,14 +156,13 @@
                                     </div>
                                 </div>
                                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                    <table class="table dataTable my-0" id="dataTable">
+                                    <table class="table dataTable my-0" id="mainTable">
                                         <thead>
                                             <tr>
-                                                <th>0m</th>
-                                                <th>-2m</th>
-                                                <th>-5m</th>
-                                                <th>Average</th>
-                                                <th>Time</th>
+                                                <th style="cursor: pointer" onclick="sortTable('Temp1')">0m</th>
+                                                <th style="cursor: pointer" onclick="sortTable('Temp2')">-2m</th>
+                                                <th style="cursor: pointer" onclick="sortTable('Temp3')">-5m</th>
+                                                <th style="cursor: pointer" onclick="sortTable('Timestamps')">Time</th>
                                             </tr>
                                         </thead>
                                         <tbody id="dataRows">
@@ -247,10 +246,9 @@
               $("#dataRows").html(data);
             });
          });
-    </script>
+
 
     <!-- on change in row amount -->
-    <script>
         // this is the main jquery function
         $(document).ready(function(){
             // bind the click event to the row length drop down
@@ -262,6 +260,31 @@
                 });
             });
          });
+
+    <!-- sort by temp1 -->
+        var asc = true;
+
+        function sortTable(orderItem){
+            if (asc) {
+                // ajax call
+                var repeats = document.getElementById("repeats").value;
+                var url = "/api/temperature/" + repeats + '/' + orderItem + '/' + 'asc';
+                $.get(url, function (data) {
+                    $("#dataRows").html(data);
+                });
+                asc = false
+                }
+
+            else{
+                // ajax call
+                var repeats = document.getElementById("repeats").value;
+                var url = "/api/temperature/" + repeats + '/' + orderItem +'/' + 'desc';
+                $.get(url, function (data) {
+                    $("#dataRows").html(data);
+                });
+                asc = true
+                }
+        }
     </script>
 
     <!-- download csv -->

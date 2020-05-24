@@ -5,16 +5,15 @@ import sqlite3
 
 weatherDb = "static/weather_user.db"
 
-timestamp = datetime.timestamp(datetime.now())
+timestamp = int(datetime.timestamp(datetime.now()))
+
+try:
+    conn = sqlite3.connect(weatherDb)
+# print exception if there is one
+except Exception as e:
+    print(e)
 
 for i in range(4032):
-
-    try:
-        conn = sqlite3.connect(weatherDb)
-    #print exception if there is one
-    except Exception as e:
-        print(e)
-
 
     t1 = round(random.uniform((25-2), 25), 2)
     t2 = round(random.uniform((t1-2), t1), 2)
@@ -27,8 +26,7 @@ for i in range(4032):
 
     cur = conn.cursor()
 
-    sql = f"INSERT INTO Dates (Timestamps)" \
-          f"VALUES ({timestamp});"
+    sql = f"INSERT INTO Dates (Timestamps, Datetime) VALUES ({timestamp}, '{datetime.fromtimestamp(timestamp)}');"
     try:
         cur.execute(sql)
     except Exception as e:
@@ -36,51 +34,14 @@ for i in range(4032):
     conn.commit()
     timeID = cur.lastrowid
 
-    sql = f"INSERT INTO Temperature (Temp1, Temp2, Temp3)" \
-          f"VALUES ({t1}, {t2}, {t3});"
+    sql = f"INSERT INTO WeatherData (Temp1, Temp2, Temp3, WaveHeight, WindSpeed, WindDir, Latitude, Longitude, TimeID)" \
+          f"VALUES ({t1}, {t2}, {t3}, {wave}, {wind}, {windDir}, {lat}, {long}, {timeID});"
     try:
         cur.execute(sql)
     except Exception as e:
-        print(f"Temperature {e}")
+        print(f"WeatherData {e}")
     conn.commit()
-    tempID = cur.lastrowid
-
-    sql = f"INSERT INTO Wave (WaveHeight)" \
-          f"VALUES ({wave});"
-    try:
-        cur.execute(sql)
-    except Exception as e:
-        print(f"Wave {e}")
-    conn.commit()
-    waveID = cur.lastrowid
-
-    sql = f"INSERT INTO Wind (WindSpeed, WindDir)" \
-          f"VALUES ({wind}, {windDir});"
-    try:
-        cur.execute(sql)
-    except Exception as e:
-        print(f"Wind {e}")
-    conn.commit()
-    windID = cur.lastrowid
-
-    sql = f"INSERT INTO Location (Latitude, Longitude)" \
-          f"VALUES ({lat}, {long});"
-    try:
-        cur.execute(sql)
-    except Exception as e:
-        print(f"Wind {e}")
-    conn.commit()
-    locationID = cur.lastrowid
-
-
-    sql = f"INSERT INTO Link (TimeID, TempID, WaveID, WindID, LocationID)" \
-          f"VALUES ({timeID}, {tempID}, {waveID}, {windID}, {locationID});"
-    try:
-        cur.execute(sql)
-    except Exception as e:
-        print(f"Wind {e}")
-    conn.commit()
-
-    conn.close()
 
     timestamp = timestamp + 300
+
+conn.close()
