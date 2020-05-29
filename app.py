@@ -3,8 +3,7 @@ from flask import *
 import hashlib
 import sqlite3
 from datetime import *
-import ast
-import uuid
+import time
 import csv
 
 #setting variables
@@ -161,13 +160,15 @@ def index():
     #     }
     # }
 
-    try:
-        cookie = ast.literal_eval(request.cookies.get('userDetails'))
-        userDetails = cookie[0]
-    except:
+    cookie = request.cookies.get('userDetails')
+    if cookie:
+        userDetails = cookie
+        imgPath = url_for('static', filename='assets/img/dogs/image2.jpeg')
+    else:
         userDetails = 'Profile'
+        imgPath = url_for('static', filename='assets/img/blank_avatar.png')
     #parse data into the html frontend.
-    return render_template('index.html', Temp1=Temp1, Temp2=Temp2, Temp3=Temp3, WindSpeed=WindSpeed, Wave=Wave, userDetails=userDetails)
+    return render_template('index.html', Temp1=Temp1, Temp2=Temp2, Temp3=Temp3, WindSpeed=WindSpeed, Wave=Wave, userDetails=userDetails, imgPath=imgPath)
 
 
 @app.route("/temperature", methods=('GET', 'POST'))
@@ -268,6 +269,13 @@ def APIselectOrderTemp(conn, repeats, orderItem, order):
     return(results)
 
 
+def APIselectFilterTemp(conn, repeats, t1Start, t1End, filterStartDate, filterEndDate):
+    cur = conn.cursor()  #and 20<Temp2<21 and 19<Temp3<20
+    sql = f"select Temp1, Temp2, Temp3, Datetime from WeatherData join Dates on Dates.TimeID = WeatherData.TimeID where Temp1>{t1Start} and Temp1<{t1End} and  Timestamps>{filterStartDate} and Timestamps<{filterEndDate} order by Timestamps desc limit {repeats}"
+    results = cur.execute(sql).fetchall()
+    return(results)
+
+
 #routes for the API
 #rendering the temperature table on page load.
 @app.route("/api/temperature/<repeats>", methods=('GET', 'POST'))
@@ -329,6 +337,28 @@ def APIsortTemps(repeats=0, orderItem=0, order=0):
                     </tr>
                     '''
         return html
+
+
+@app.route("/api/temperature/<repeats>/<t1Start>/<t1End>/<filterStartDate>/<filterEndDate>", methods=('GET', 'POST'))
+def APIfilterTemps(repeats=0, t1Start=0, t1End=0, filterStartDate=0, filterEndDate=0):
+    if repeats != 0:
+        conn = create_connection(db)
+        filterStartDate = int(time.mktime(datetime.strptime(filterStartDate.replace('-','/'), '%Y/%m/%d').timetuple()))
+        filterEndDate = int(time.mktime(datetime.strptime(filterEndDate.replace('-','/'), '%Y/%m/%d').timetuple()))
+        info = APIselectFilterTemp(conn, int(repeats), t1Start, t1End, filterStartDate, filterEndDate)
+        print(info)
+        html = ''
+        for item in info:
+            html += f'''
+                   <tr>
+                        <td>{item[0]}<br></td>
+                        <td>{item[1]}<br></td>
+                        <td>{item[2]}<br></td>
+                        <td>{item[3]}</td>
+                    </tr>
+                    '''
+        return html
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Table - Brand</title>
+    <title>Wave Table - Fresh Temps</title>
     <link rel="stylesheet" href="{{url_for('static', filename='assets/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{{url_for('static', filename='assets/fonts/fontawesome-all.min.css')}}">
@@ -96,6 +96,34 @@
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
                     <h3 class="text-dark mb-0">Wave Data</h3>
+                </div>
+                <div class="row" style="padding-bottom: 20px;">
+                    <div class="col">
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 font-weight-bold">Filter by:</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 text-nowrap">
+                                        <div class="dataTables_length" aria-controls="dataTable">
+                                            <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>Height:</strong></p><input type="number">
+                                            <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>&nbsp; to</strong></p><input type="number"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 text-nowrap">
+                                        <div class="dataTables_length" aria-controls="dataTable">
+                                            <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>Date:&nbsp; &nbsp;&nbsp;</strong></p><input type="date">
+                                            <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>&nbsp; to</strong></p><input type="date"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-left"><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-arrow-right fa-sm text-white-50"></i>&nbsp;Submit</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row" style="padding-bottom: 20px;">
                     <div class="col">
@@ -219,7 +247,7 @@
         </div>
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © Brand 2020</span></div>
+                <div class="text-center my-auto copyright"><span>Copyright © Fresh Temps 2020</span></div>
             </div>
         </footer>
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
