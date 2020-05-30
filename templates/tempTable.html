@@ -101,7 +101,7 @@
                     <div class="col">
                         <div class="card shadow">
                             <div class="card-header py-3">
-                                <p class="text-primary m-0 font-weight-bold">Filter by:</p>
+                                <p class="text-primary m-0 font-weight-bold">Search by:</p>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -297,13 +297,26 @@
                 var filterStartDate = document.getElementById("filterStartDate").value;
                 var filterEndDate = document.getElementById("filterEndDate").value;
 
-                var url = "/api/temperature/" + repeats + '/' + t1Start + '/' + t1End + '/' + filterStartDate + '/' + filterEndDate;
-                alert(url);
+                var url = "/api/temperature/" + repeats + '/' + checkNullNeg(t1Start) + '/' + checkNullPos(t1End) + '/' + checkNullNeg(filterStartDate) + '/' + checkNullPos(filterEndDate) + '/' + checkNullNeg(t2Start) + '/' + checkNullPos(t2End) + '/' + checkNullNeg(t3Start) + '/' + checkNullPos(t3End);
                 $.get(url, function (data) {
                     $("#dataRows").html(data);
                 });
             });
          });
+
+        function checkNullPos(item) {
+            if (item == ''){
+                item = 999999999999999999999999999999
+            }
+            return item
+        }
+
+        function checkNullNeg(item) {
+            if (item == ''){
+                item = -999999999999999999999999999999
+            }
+            return item
+        }
     </script>
 
     <!-- download csv UNIMPLEMENTED-->

@@ -269,11 +269,23 @@ def APIselectOrderTemp(conn, repeats, orderItem, order):
     return(results)
 
 
-def APIselectFilterTemp(conn, repeats, t1Start, t1End, filterStartDate, filterEndDate):
-    cur = conn.cursor()  #and 20<Temp2<21 and 19<Temp3<20
-    sql = f"select Temp1, Temp2, Temp3, Datetime from WeatherData join Dates on Dates.TimeID = WeatherData.TimeID where Temp1>{t1Start} and Temp1<{t1End} and  Timestamps>{filterStartDate} and Timestamps<{filterEndDate} order by Timestamps desc limit {repeats}"
+def APIselectFilterTemp(conn, repeats, t1Start, t1End, filterStartDate, filterEndDate, t2Start, t2End, t3Start, t3End):
+    cur = conn.cursor()
+    sql = f"select Temp1, Temp2, Temp3, Datetime from WeatherData join Dates on Dates.TimeID = WeatherData.TimeID where Temp1>({t1Start}) and Temp1<{t1End} and  Timestamps>({filterStartDate}) and Timestamps<{filterEndDate} and Temp2>({t2Start}) and Temp2<{t2End} and Temp3>({t3Start}) and Temp3<{t3End} order by Timestamps desc limit {repeats}"
     results = cur.execute(sql).fetchall()
     return(results)
+
+
+def checkNullPos(item):
+    if item == "":
+        item = 9999999999999999
+    return item
+
+
+def checkNullNeg(item):
+    if item == "":
+        item = -9999999999999999
+    return item
 
 
 #routes for the API
@@ -339,14 +351,13 @@ def APIsortTemps(repeats=0, orderItem=0, order=0):
         return html
 
 
-@app.route("/api/temperature/<repeats>/<t1Start>/<t1End>/<filterStartDate>/<filterEndDate>", methods=('GET', 'POST'))
-def APIfilterTemps(repeats=0, t1Start=0, t1End=0, filterStartDate=0, filterEndDate=0):
+@app.route("/api/temperature/<repeats>/<t1Start>/<t1End>/<filterStartDate>/<filterEndDate>/<t2Start>/<t2End>/<t3Start>/<t3End>", methods=('GET', 'POST'))
+def APIfilterTemps(repeats=0, t1Start=0, t1End=0, filterStartDate=0, filterEndDate=0, t2Start= 0,  t2End= 0,  t3Start= 0, t3End = 0):
     if repeats != 0:
         conn = create_connection(db)
         filterStartDate = int(time.mktime(datetime.strptime(filterStartDate.replace('-','/'), '%Y/%m/%d').timetuple()))
         filterEndDate = int(time.mktime(datetime.strptime(filterEndDate.replace('-','/'), '%Y/%m/%d').timetuple()))
-        info = APIselectFilterTemp(conn, int(repeats), t1Start, t1End, filterStartDate, filterEndDate)
-        print(info)
+        info = APIselectFilterTemp(conn, int(repeats), t1Start, t1End, filterStartDate, filterEndDate, t2Start, t2End, t3Start, t3End)
         html = ''
         for item in info:
             html += f'''
