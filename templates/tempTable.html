@@ -97,41 +97,45 @@
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
                     <h3 class="text-dark mb-0">Temperature Data</h3>
                 </div>
+                <!-- search card -->
                 <div class="row" style="padding-bottom: 20px;">
                     <div class="col">
                         <div class="card shadow">
                             <div class="card-header py-3">
+                                <!-- card title -->
                                 <p class="text-primary m-0 font-weight-bold">Search by:</p>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 text-nowrap">
-                                        <div class="dataTables_length" aria-controls="dataTable">
+                                        <div>
+                                            <!-- selection inputs -->
                                             <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>Temperature (0m):&nbsp;&nbsp;</strong></p><input id="t1Start" type="number">
                                             <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>&nbsp; to</strong></p><input id="t1End" type="number"></div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 text-nowrap">
-                                        <div class="dataTables_length" aria-controls="dataTable">
+                                        <div>
                                             <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>Temperature (-2m):</strong></p><input id="t2Start" type="number">
                                             <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>&nbsp; to</strong></p><input id="t2End" type="number"></div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 text-nowrap">
-                                        <div class="dataTables_length" aria-controls="dataTable">
+                                        <div>
                                             <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>Temperature (-5m):</strong></p><input id="t3Start" type="number">
                                             <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>&nbsp; to</strong></p><input id="t3End" type="number"></div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 text-nowrap">
-                                        <div class="dataTables_length" aria-controls="dataTable">
+                                        <div>
                                             <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>Date:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</strong></p><input id="filterStartDate" type="date">
                                             <p class="text-secondary d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>&nbsp; to</strong></p><input id="filterEndDate" type="date"></div>
                                     </div>
                                 </div>
+                                <!-- submit button -->
                                 <div class="row">
                                     <div class="col text-left"><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" id="enterLimit"><i class="fas fa-arrow-right fa-sm text-white-50"></i>&nbsp;<span style="color: #ffffff">Submit</span></a></div>
                                 </div>
@@ -139,20 +143,24 @@
                         </div>
                     </div>
                 </div>
+                <!-- data table -->
                 <div class="row" style="padding-bottom: 20px;">
                     <div class="col">
                         <div class="card shadow">
                             <div class="card-header py-3">
+                                <!-- card table -->
                                 <p class="text-primary m-0 font-weight-bold">Water Temperature (°C) @ 3 Depths: 0m, -2m, -5m Below Surface</p>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 text-nowrap">
+                                        <!-- limit display amount -->
                                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select id="repeats" class="form-control form-control-sm custom-select custom-select-sm"><option value="10" selected="">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>&nbsp;</label></div>
                                     </div>
                                 </div>
                                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                                     <table class="table dataTable my-0" id="mainTable">
+                                        <!-- table headers -->
                                         <thead>
                                             <tr>
                                                 <th style="cursor: pointer" onclick="sortTable('Temp1')">0m</th>
@@ -162,7 +170,7 @@
                                             </tr>
                                         </thead>
                                         <tbody id="dataRows">
-
+                                        <!-- table body for insert by ajax -->
                                         </tbody>
                                         <tfoot>
                                             <tr></tr>
@@ -171,10 +179,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 align-self-center">
+                                        <!-- shows amounts of pagination - currently not implemented -->
                                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
                                     </div>
                                     <div class="col-md-6">
                                         <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                            <!-- pagination - currently not implemented -->
                                             <ul class="pagination">
                                                 <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
                                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -189,11 +199,13 @@
                         </div>
                     </div>
                 </div>
+                <!-- download data -->
                 <div class="row">
                     <div class="col">
                         <div class="card shadow">
                             <div class="card-body">
                                 <div class="row">
+                                    <!-- select data date and interval to download - currently not implemented -->
                                     <div class="col-auto">
                                         <p class="d-inline-flex" style="padding-right: 10px;color: rgb(78,115,223);"><strong>Start Date:</strong></p><input type="date" id="startDate"></div>
                                     <div class="col-auto">
@@ -203,6 +215,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
+                                        <!-- download button -->
                                         <form method="post" id="downloadForm" action="/api/download/data.csv/data.csv"><a class="btn btn-primary btn-sm d-none d-sm-inline-block" id="download" onclick="submit()"><i class="fas fa-download fa-sm text-white-50"></i><span style="color: #ffffff"> Download Data</span></a></form>
                                     </div>
                                 </div>
@@ -258,6 +271,7 @@
         var asc = true;
 
         function sortTable(orderItem){
+            <!-- changes ajax call based on value of asc -->
             if (asc) {
                 // ajax call
                 var repeats = document.getElementById("repeats").value;
@@ -265,6 +279,7 @@
                 $.get(url, function (data) {
                     $("#dataRows").html(data);
                 });
+                <!-- toggles asc -->
                 asc = false
                 }
 
@@ -301,6 +316,7 @@
             });
          });
 
+        <!-- if item doesn't exist, assign a value -->
         function checkNullPos(item) {
             if (item == ''){
                 item = 999999999999999999999999999999
@@ -314,39 +330,8 @@
             }
             return item
         }
-    </script>
 
-    <!-- download csv UNIMPLEMENTED-->
-{#    <script>#}
-{#        // this is the main jquery function#}
-{#        $(document).ready(function(){#}
-{#            // bind the click event to the row length drop down#}
-{#            $("#download").click(function() {#}
-{#                var startDate = document.getElementById("startDate").value;#}
-{#                var endDate = document.getElementById("endDate").value;#}
-{#                var url = "/api/download/" + startDate + "/" + endDate;#}
-{#                $.get(url, function (data) {#}
-{#                    fetch(data)#}
-{#                      .then(resp => resp.blob())#}
-{#                      .then(blob => {#}
-{#                        const url = window.URL.createObjectURL(blob);#}
-{#                        const a = document.createElement('a');#}
-{#                        a.style.display = 'none';#}
-{#                        a.href = url;#}
-{#                        // the filename you want#}
-{#                        a.download = 'weather_data.csv';#}
-{#                        document.body.appendChild(a);#}
-{#                        a.click();#}
-{#                        window.URL.revokeObjectURL(url);#}
-{#                        alert('your file has downloaded!'); // or you know, something with better UX...#}
-{#                      })#}
-{#                      .catch(() => alert('oh no!'));#}
-{#                });#}
-{#            });#}
-{#         });#}
-{#    </script>#}
-
-    <script>
+        <!-- submit form -->
         function submit() {
             document.getElementById("downloadForm").submit();
         }

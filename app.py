@@ -31,7 +31,7 @@ def create_connection(db_file):
     return conn
 
 #SQL statements and functions. Uses timestamp integers for time calculations.
-
+#select datatype in defined time increments
 def selectTemp(conn, depth, timestamp, repeats, period):
     cur = conn.cursor()
     results = ()
@@ -97,69 +97,7 @@ def index():
     WindSpeed = selectWindSpeed(conn, time, 6, 57600)
     Wave = selectWave(conn, time, 13, 7200)
 
-    #UNIMPLEMENTED ALTERNATE METHOD FOR GETTING DATA TO THE GRAPHS.
-    # data = {
-    #     type: 'line',
-    #     'data': {
-    #         'labels': [],
-    #         'datasets': [{
-    #             'label': '0m',
-    #             'fill': True,
-    #             'data': [],
-    #             'backgroundColor': 'rgba(78, 115, 223, 0.05)',
-    #             'borderColor': 'rgb(28,200,138)',
-    #         },
-    #             {
-    #                 'label': '-2m',
-    #                 'fill': True,
-    #                 'data': [],
-    #                 'backgroundColor': 'rgba(78, 115, 223, 0.05)',
-    #                 'borderColor': 'rgb(54,185,204)',
-    #             },
-    #             {
-    #                 'label': '-5m',
-    #                 'fill': True,
-    #                 'data': [],
-    #                 'backgroundColor': 'rgba(78, 115, 223, 0.05)',
-    #                 'borderColor': 'rgb(54,185,204)',
-    #             }]
-    #     },
-    #     'options': {
-    #         'maintainAspectRatio': False,
-    #         'legend': {'display': True},
-    #         'title': {},
-    #         'scales': {
-    #             'xAxes': [{
-    #                 'gridLines':
-    #                     {'color': 'rgb(234, 236, 244)',
-    #                      'zeroLineColor': 'rgb(234, 236, 244)',
-    #                      'drawBorder': False,
-    #                      'drawTicks': False,
-    #                      'borderDash': ['2'],
-    #                      'zeroLineBorderDash': ['2'],
-    #                      'drawOnChartArea': True},
-    #                 'ticks': {
-    #                     'fontColor': '#858796',
-    #                     'beginAtZero': False,
-    #                     'padding': 20}
-    #             }],
-    #             'yAxes': [{
-    #                 'gridLines': {
-    #                     'color': 'rgb(234, 236, 244)',
-    #                     'zeroLineColor': 'rgb(234, 236, 244)',
-    #                     'drawBorder': False,
-    #                     'drawTicks': False,
-    #                     'borderDash': ['2'],
-    #                     'zeroLineBorderDash': ['2']},
-    #                 'ticks': {
-    #                     'fontColor': '#858796',
-    #                     'beginAtZero': False,
-    #                     'padding': 20}
-    #             }]
-    #         }
-    #     }
-    # }
-
+    #get user details and profile pictures from cookie, if it exists
     cookie = request.cookies.get('userDetails')
     if cookie:
         userDetails = cookie
@@ -171,6 +109,7 @@ def index():
     return render_template('index.html', Temp1=Temp1, Temp2=Temp2, Temp3=Temp3, WindSpeed=WindSpeed, Wave=Wave, userDetails=userDetails, imgPath=imgPath)
 
 
+#routes for data tables
 @app.route("/temperature", methods=('GET', 'POST'))
 def temp():
     return render_template('tempTable.html')
@@ -186,6 +125,7 @@ def wind():
     return render_template('windTable.html')
 
 
+#login route
 @app.route("/login", methods=('GET', 'POST'))
 def login():
     # check method
@@ -227,6 +167,7 @@ def logoutFn():
     return response
 
 
+#more basic routes for the rest of the site
 @app.route("/profile", methods=('GET', 'POST'))
 def profileFn():
     return render_template('profile.html')
@@ -239,6 +180,8 @@ def registerFn():
 @app.route("/documentation", methods=('GET', 'POST'))
 def docorFn():
     return render_template('documentation.html')
+
+
 #API----------------------------------------------------------------------------------------------------------------------
 #sql functions for API processes
 def APIselectTemp(conn, timestamp, repeats, period):
@@ -258,6 +201,7 @@ def APIselectTemp(conn, timestamp, repeats, period):
         #add more temperature elements to list
         results = results + final
         timestamp = timestamp - period
+    #return the data
     return(results)
 
 
@@ -269,23 +213,12 @@ def APIselectOrderTemp(conn, repeats, orderItem, order):
     return(results)
 
 
+#return filtered/searched by data
 def APIselectFilterTemp(conn, repeats, t1Start, t1End, filterStartDate, filterEndDate, t2Start, t2End, t3Start, t3End):
     cur = conn.cursor()
     sql = f"select Temp1, Temp2, Temp3, Datetime from WeatherData join Dates on Dates.TimeID = WeatherData.TimeID where Temp1>({t1Start}) and Temp1<{t1End} and  Timestamps>({filterStartDate}) and Timestamps<{filterEndDate} and Temp2>({t2Start}) and Temp2<{t2End} and Temp3>({t3Start}) and Temp3<{t3End} order by Timestamps desc limit {repeats}"
     results = cur.execute(sql).fetchall()
     return(results)
-
-
-def checkNullPos(item):
-    if item == "":
-        item = 9999999999999999
-    return item
-
-
-def checkNullNeg(item):
-    if item == "":
-        item = -9999999999999999
-    return item
 
 
 #routes for the API
@@ -294,6 +227,7 @@ def checkNullNeg(item):
 def APIgetTemps(repeats=0):
     if repeats != 0:
         conn = create_connection(db)
+        #getting data to insert into table
         info = APIselectTemp(conn, selectNewestTime(conn), int(repeats), 300)
         html = ''
         #insert data into html
@@ -351,6 +285,7 @@ def APIsortTemps(repeats=0, orderItem=0, order=0):
         return html
 
 
+#rendering the temperature table with filtered/searched values.
 @app.route("/api/temperature/<repeats>/<t1Start>/<t1End>/<filterStartDate>/<filterEndDate>/<t2Start>/<t2End>/<t3Start>/<t3End>", methods=('GET', 'POST'))
 def APIfilterTemps(repeats=0, t1Start=0, t1End=0, filterStartDate=0, filterEndDate=0, t2Start= 0,  t2End= 0,  t3Start= 0, t3End = 0):
     if repeats != 0:

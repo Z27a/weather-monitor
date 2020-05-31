@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html>
-
+<!-- Links to stylesheets stuff -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Brand</title>
+    <title>Dashboard - Fresh Temps</title>
     <link rel="stylesheet" href="{{url_for('static', filename='assets/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{{url_for('static', filename='assets/fonts/fontawesome-all.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='assets/css/untitled.css')}}">
 </head>
-
+<!-- html body -->
 <body id="page-top">
     <div id="wrapper">
+    <!-- navbar on right -->
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <!-- icon and title -->
                     <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-water"></i></div>
                     <div class="sidebar-brand-text mx-3"><span>Fresh Temps</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
+                <!-- nav buttons -->
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="/"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="/temperature"><i class="fas fa-table"></i><span>Temperature Data</span></a></li>
@@ -27,19 +30,23 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="/wind"><i class="fas fa-table"></i><span>Wind Data</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="/documentation"><i class="fas fa-question"></i><span>Documentation</span></a></li>
                 </ul>
+                <!-- navbar collapse button-->
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
+            <!-- Top navbar -->
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <!-- normal search -->
                         <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                             <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
                                 <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
                             </div>
                         </form>
                         <ul class="nav navbar-nav flex-nowrap ml-auto">
+                            <!-- mobile search with dropdown -->
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
                                     <form class="form-inline mr-auto navbar-search w-100">
@@ -49,11 +56,15 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown no-arrow mx-1" role="presentation">
+                            <!-- Alerts section -->
+                            <li class="nav-item dropdown no-arrow mx-1" role="presentation">\
+                                <!-- number of alerts -->
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
                                         role="menu">
+                                        <!-- dropdown title -->
                                         <h6 class="dropdown-header">Website Updates</h6>
+                                        <!-- dropdown content -->
                                         <a class="d-flex align-items-center dropdown-item" href="#">
                                             <div class="mr-3">
                                                 <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
@@ -77,12 +88,16 @@
                                             <div><span class="small text-gray-500">December 2, 2019</span>
                                                 <p>This service will undergo maintenance on 03/12/19 00:00</p>
                                             </div>
+                                        <!-- dropdown footer -->
                                         </a><a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div>
                                 </div>
                             </li>
+                            <!-- profile -->
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow" role="presentation">
+                                <!-- profile name and picture -->
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">{{userDetails}}</span><img class="border rounded-circle img-profile" src="{{imgPath}}"></a>
+                                    <!-- profile dropdown -->
                                     <div
                                         class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="/profile"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a>
                                         <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="/logout"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a></div>
@@ -91,19 +106,24 @@
                     </ul>
             </div>
             </nav>
+            <!-- main content -->
             <div class="container-fluid">
+            <!-- title -->
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
                     <h3 class="text-dark mb-0">Dashboard</h3>
                 </div>
+            <!-- tiles -->
                 <div class="row">
                     <div class="col-md-6 col-xl-3 mb-4">
                         <div class="card shadow border-left-primary py-2">
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col mr-2">
+                                        <!-- tile text -->
                                         <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Current time</span></div>
                                         <div class="text-dark font-weight-bold h5 mb-0"><span>09:00 28/05/2020</span></div>
                                     </div>
+                                    <!-- icon -->
                                     <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
                                 </div>
                             </div>
@@ -179,17 +199,22 @@
                         </div>
                     </div>
                 </div>
+                <!-- graphs -->
                 <div class="row">
                     <div class="col">
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
+                                <!-- title -->
                                 <h6 class="text-primary font-weight-bold m-0">&nbsp;Water Temperature (Last 24hrs)<br></h6>
+                                <!-- dropdown -->
                                 <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                    <!-- dropdown contents -->
                                     <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in"
                                         role="menu"><a class="dropdown-item" role="presentation" href="/temperature">&nbsp;See full dataset&nbsp;</a><a class="dropdown-item" role="presentation" href="/api/download/data.csv/data.csv">&nbsp;Download as csv</a>
                                         <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="/documentation">Documentation</a></div>
                                 </div>
                             </div>
+                            <!-- graph -->
                             <div class="card-body">
                                 <div class="chart-area"><canvas data-bs-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;09:00&quot;,&quot;11:00&quot;,&quot;13:00&quot;,&quot;15:00&quot;,&quot;17:00&quot;,&quot;19:00&quot;,&quot;21:00&quot;,&quot;23:00&quot;,&quot;01:00&quot;,&quot;03:00&quot;,&quot;05:00&quot;,&quot;07:00&quot;,&quot;09:00&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;0m&quot;,&quot;fill&quot;:true,&quot;data&quot;:[{% for item in Temp1 %} &quot;{{ item }}&quot;, {% endfor %} &quot;{{ Temp1[-0] }}&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgb(28,200,138)&quot;},{&quot;label&quot;:&quot;-2m&quot;,&quot;fill&quot;:true,&quot;data&quot;:[{% for item in Temp2 %} &quot;{{ item }}&quot;, {% endfor %} &quot;{{ Temp2[-0] }}&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgb(54,185,204)&quot;},{&quot;label&quot;:&quot;-5m&quot;,&quot;fill&quot;:true,&quot;data&quot;:[{% for item in Temp3 %} &quot;{{ item }}&quot;, {% endfor %} &quot;{{ Temp3[-0] }}&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:true},&quot;title&quot;:{},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:true},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;beginAtZero&quot;:false,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;beginAtZero&quot;:false,&quot;padding&quot;:20}}]}}}"></canvas></div>
                             </div>
@@ -250,12 +275,16 @@
                 </div>
             </div>
         </div>
+        <!-- footer -->
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
+                <!-- footer contents -->
                 <div class="text-center my-auto copyright"><span>Copyright © Fresh Temps 2020</span></div>
             </div>
         </footer>
+    <!-- back to page top button -->
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    <!-- links to scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="{{url_for('static', filename='assets/js/jquery.min.js')}}"></script>
     <script src="{{url_for('static', filename='assets/bootstrap/js/bootstrap.min.js')}}"></script>
