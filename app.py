@@ -79,9 +79,23 @@ def selectNames(conn, email):
 
 def selectNewestTime(conn):
     cur = conn.cursor()
-    sql = f"select  max(Timestamps) from Dates"
+    sql = f"select max(Timestamps) from Dates"
     results = cur.execute(sql).fetchall()[0][0]
     return(results)
+
+
+#insert user details into datbase
+def commitUser(conn, data):
+    print(data)
+    cur = conn.cursor()
+    #insert with data sanitisation
+    sql = f"insert into Users (Email, Password, First_name, Last_name) values (?,?,?,?)"
+    print(sql)
+    try:
+        cur.execute(sql, data)
+    except Exception as e:
+        print(f"commitUser {e}")
+    return
 
 #website routes/directories
 
@@ -101,12 +115,17 @@ def index():
     cookie = request.cookies.get('userDetails')
     if cookie:
         userDetails = cookie
+        #set login specific ui elements
+        user = 'Profile'
+        userLink = '/profile'
         imgPath = url_for('static', filename='assets/img/dogs/image2.jpeg')
     else:
         userDetails = 'Profile'
+        user= 'Login'
+        userLink = '/login'
         imgPath = url_for('static', filename='assets/img/blank_avatar.png')
     #parse data into the html frontend.
-    return render_template('index.html', Temp1=Temp1, Temp2=Temp2, Temp3=Temp3, WindSpeed=WindSpeed, Wave=Wave, userDetails=userDetails, imgPath=imgPath)
+    return render_template('index.html', Temp1=Temp1, Temp2=Temp2, Temp3=Temp3, WindSpeed=WindSpeed, Wave=Wave, userDetails=userDetails, imgPath=imgPath, user=user, userLink=userLink)
 
 
 #routes for data tables
@@ -175,7 +194,22 @@ def profileFn():
 
 @app.route("/register", methods=('GET', 'POST'))
 def registerFn():
-    return render_template('register.html')
+    if request.method == 'POST':
+        conn = create_connection(db)
+
+        #get data from form and encode
+        email = str((hashlib.sha256(request.form['email'].encode('utf-8'))).hexdigest())
+        pwd = str((hashlib.sha256(request.form['password'].encode('utf-8'))).hexdigest())
+        fName = str(request.form['first_name'])
+        lName = str(request.form['last_name'])
+
+        print(email, pwd, fName, lName)
+        #commit data to database
+        commitUser(conn, (email, pwd, fName, lName))
+        #redirect to login
+        return redirect(url_for("login"))
+    else:
+        return render_template('register.html')
 
 @app.route("/documentation", methods=('GET', 'POST'))
 def docorFn():
@@ -248,22 +282,26 @@ def APIgetTemps(repeats=0):
 @app.route("/api/download/<startDate>/<endDate>", methods=('GET', 'POST'))
 def APIdownloadFile(startDate='', endDate=''):
     if startDate !='' and endDate != '':
-        #write data to a csv file
-        with open('output.csv', 'w', newline='') as csvfile:
-            #set header names
-            fieldnames = ['Time', 'Temperature (0m)', 'Temperature (-2m)', 'Temperature (-5m)']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        #check if user is logged in
+        cookie = request.cookies.get('userDetails')
+        if cookie:
+            #write data to a csv file
+            with open('output.csv', 'w', newline='') as csvfile:
+                #set header names
+                fieldnames = ['Time', 'Temperature (0m)', 'Temperature (-2m)', 'Temperature (-5m)']
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-            #get data from database
-            conn = create_connection(db)
-            data = APIselectTemp(conn, selectNewestTime(conn), 500, 300)
+                #get data from database
+                conn = create_connection(db)
+                data = APIselectTemp(conn, selectNewestTime(conn), 500, 300)
 
-            #write data
-            writer.writeheader()
-            for item in data:
-                writer.writerow({'Time':item[4], 'Temperature (0m)':item[0], 'Temperature (-2m)':item[1], 'Temperature (-5m)':item[2]})
-        #return file
-    return  send_file('output.csv', attachment_filename='data.csv')
+                #write data
+                writer.writeheader()
+                for item in data:
+                    writer.writerow({'Time':item[4], 'Temperature (0m)':item[0], 'Temperature (-2m)':item[1], 'Temperature (-5m)':item[2]})
+            #return file
+        return  send_file('output.csv', attachment_filename='data.csv')
+    return
 
 
 #rendering the temperature table with sorted values.
